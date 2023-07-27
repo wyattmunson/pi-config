@@ -99,7 +99,7 @@ class Warden:
 
         # Check for failure
         if obj["failure"] == "returncode":
-            if obj["failureValue"] == 0 and command.returncode > 0:
+            if obj["failureValue"] == "nonzero" and command.returncode > 0:
                 print("FAILED: ", obj["topic"])
                 return False
 
