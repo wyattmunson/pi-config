@@ -139,6 +139,8 @@ class Warden:
 
     def installPackage(self, headline):
         print("Package installing...")
+        config = fullConfigMap[headline]
+        return self.runCommandWithCheck(config)
     
 
     def aptGetUpdate(self):
@@ -249,13 +251,14 @@ def runCommandWithCheck(obj):
     # Check for failure
     if obj["failure"] == "returncode":
         if obj["failureValue"] == 0 and command.returncode > 0:
-            print("FAILED: ", obj["topic"])
+            print("Command response:", command)
+            print("FAILED: Command returned failure condition. More output above.")
             return False
     
     # Check for true, warn when failure or success not detected
     if obj["success"] == "returncode":
         if obj["successValue"] == 0 and command.returncode == 0:
-            print("SUCCESS: ", obj["topic"])
+            print("SUCCESS: ", "Command returned success response")
             return True
     
     # success not detected, returning True for now
