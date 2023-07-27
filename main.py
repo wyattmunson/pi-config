@@ -39,9 +39,23 @@ fullConfigMap = {
         "failure": "returncode",
         "failureValue": "nonzero"
     },
+    "deps/git/install": {
+        "command": "sudo apt-get install git -y",
+        "success": "returncode",
+        "successValue": 0,
+        "failure": "returncode",
+        "failureValue": "nonzero"
+    },
     "deps/docker/check": {
         "topic": "install/verify/docker",
         "command": ["docker --version"],
+        "success": "returncode",
+        "successValue": 0,
+        "failure": "returncode",
+        "failureValue": "nonzero"
+    },
+    "deps/docker/install": {
+        "command": ["sudo sh install-docker.sh"],
         "success": "returncode",
         "successValue": 0,
         "failure": "returncode",
@@ -147,7 +161,11 @@ class Warden:
             isInstalled = self.checkPackage(x)
             print("Is installed:", isInstalled)
             if not isInstalled:
-                installSuccessful = self.installPackage(x)
+                # Get install headline
+                splitHeadline = x.split("/")[0:2]
+                installHeadline = "/".join(splitHeadline)
+
+                installSuccessful = self.installPackage(installHeadline)
                 if installSuccessful:
                     print("Installed succesfully")
                 else:
