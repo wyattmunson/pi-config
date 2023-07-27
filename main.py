@@ -287,3 +287,6 @@ def installDocker():
 returnCode = subprocess.run(["git --version"], shell=True)
 # returnCode = subprocess.run(["git", "-v"], shell=True)
 print(returnCode)
+
+subscript = subprocess.run(["sh ./script.sh"], shell=True)
+print(subscript)
